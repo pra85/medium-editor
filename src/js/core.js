@@ -73,10 +73,12 @@
             } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.ENTER)) {
                 // hitting return in the begining of a header will create empty header elements before the current one
                 // instead, make "<p><br></p>" element, which are what happens if you hit return in an empty paragraph
-                p = this.options.ownerDocument.createElement('p');
-                p.innerHTML = '<br>';
-                node.previousElementSibling.parentNode.insertBefore(p, node);
-                event.preventDefault();
+                if (!this.options.disableDoubleReturn) {
+                    p = this.options.ownerDocument.createElement('p');
+                    p.innerHTML = '<br>';
+                    node.previousElementSibling.parentNode.insertBefore(p, node);
+                    event.preventDefault();
+                }
             }
         } else if (MediumEditor.util.isKey(event, MediumEditor.util.keyCode.DELETE) &&
                     // between two sibling elements
